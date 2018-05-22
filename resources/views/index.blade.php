@@ -15,7 +15,7 @@
       </div>
     </div>
   </header>
-@stop
+@endsection
 
 
 @section('content')
@@ -80,5 +80,5 @@
       </div>
     </div>
   </div>
-@stop
+@endsection
 
