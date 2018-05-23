@@ -15,6 +15,18 @@
                 <form action="{{route('posts.update', ['post'=>$post->id])}}" method="post">
                 @csrf
                 @method('PUT')
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show my-3">
+                     
+                      @foreach ($errors->all() as $error)
+                      <strong>{{ $error }}</strong>
+                      @endforeach
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    
+                  </div>
+                @endif
                   <div class="form-group">
                     <label for="">Titre</label>
                   <input type="text" name="titre" id="titre" class="form-control" placeholder="Le titre du post" value="{{$post->titre}}">

@@ -70,6 +70,10 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $request->validate([
+            'titre' => 'required|max:255',
+            'contenu' => 'required',
+        ]);
         $post->titre = $request->titre;
         $post->contenu = $request->contenu;
         $post->save();
@@ -84,6 +88,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        return "delete";
+        $post->delete();
+        return redirect()->route('posts.index', ['post'=>$post->id]);
     }
 }
