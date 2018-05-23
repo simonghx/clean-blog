@@ -15,24 +15,19 @@
                 <form action="{{route('posts.update', ['post'=>$post->id])}}" method="post">
                 @csrf
                 @method('PUT')
-                @if ($errors->any())
-                    <div class="alert alert-danger alert-dismissible fade show my-3">
-                     
-                      @foreach ($errors->all() as $error)
-                      <strong>{{ $error }}</strong>
-                      @endforeach
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    
-                  </div>
-                @endif
+                
                   <div class="form-group">
-                    <label for="">Titre</label>
-                  <input type="text" name="titre" id="titre" class="form-control" placeholder="Le titre du post" value="{{$post->titre}}">
+                  <label for="">Titre</label>
+                  @if($errors->has('titre'))
+                  <div class="text-danger">{{$errors->first('titre')}}</div>
+                  @endif
+                  <input type="text" name="titre" id="titre" class="form-control {{$errors->has('titre') ? 'border-danger':''}}" placeholder="Le titre du post" value="{{old('titre', $post->titre)}}">
                     <div class="form-group">
                       <label for="">Contenu du post</label>
-                      <textarea class="form-control" name="contenu" id="contenu" rows="3">{{$post->contenu}}</textarea>
+                      @if($errors->has('contenu'))
+                      <div class="text-danger">{{$errors->first('contenu')}}</div>
+                      @endif
+                      <textarea class="form-control {{$errors->has('contenu') ? 'border-danger':''}}" name="contenu" id="contenu" rows="10">{{ old('contenu',$post->contenu)}}</textarea>
                     </div>
                   </div>
                   <button type="submit" class="btn btn-warning">Enregistrer</button>
