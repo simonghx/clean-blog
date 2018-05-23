@@ -58,7 +58,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return "edit";
     }
 
     /**
@@ -81,6 +81,6 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        return "delete";
     }
 }
