@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Edit Post')
+@section('title', 'Create Post')
 
 @section('content_header')
-    <h1>Edit du Post</h1>
+    <h1>Création d'un Post</h1>
 @stop
 
 @section('content')
@@ -17,13 +17,13 @@
                   <div class="form-group">
                     <label for="">Titre</label>
                     @if($errors->has('titre'))
-                    <div class="text-danger">Veuillez entrer un titre.</div>
+                    <div class="text-danger">{{$errors->first('titre')}}</div>
                     @endif
                   <input type="text" name="titre" id="titre" class="form-control {{$errors->has('titre')?'border-danger':''}}" placeholder="Le titre du post" value="{{old('titre')}}">
                     <div class="form-group">
                       <label for="">Contenu du post</label>
                       @if($errors->has('contenu'))
-                    <div class="text-danger">Veuillez entrer un contenu.</div>
+                    <div class="text-danger">{{$errors->first('contenu')}}</div>
                     @endif
                     <textarea class="form-control {{$errors->has('contenu')?'border-danger':''}}" name="contenu" id="contenu" rows="3">{{old('contenu')}}</textarea>
                     </div>

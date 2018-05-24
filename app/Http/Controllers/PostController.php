@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use App\Http\Requests\StorePost;
 
 class PostController extends Controller
 {
@@ -34,12 +35,9 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePost $request)
     {
-        $request->validate([
-            'titre' => 'required|max:255',
-            'contenu' => 'required',
-        ]);
+        $request->validated();
         $post = new Post;
         $post->titre=$request->titre;
         $post->contenu= $request->contenu;
@@ -76,12 +74,9 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(StorePost $request, Post $post)
     {
-        $request->validate([
-            'titre' => 'required|max:255',
-            'contenu' => 'required',
-        ]);
+        $request->validated();
         $post->titre = $request->titre;
         $post->contenu = $request->contenu;
         $post->save();

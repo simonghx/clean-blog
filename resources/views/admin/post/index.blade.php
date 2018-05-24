@@ -8,10 +8,8 @@
 
 @section('content')
     <div class="container">
-        <div class="box">
-            <div class="box-body">
-                <a name="" id="" class="btn btn-success" href="{{route('posts.create')}}" role="button">Créer un post</a>
-            </div>
+        <div class="text-right">
+            <a name="" id="" class="btn btn-success mb-4" href="{{route('posts.create')}}" role="button">Créer un post</a>
         </div>
     </div>
     <table class="table table-striped table-dark">
