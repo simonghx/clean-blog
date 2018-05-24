@@ -39,7 +39,7 @@ class StorePost extends FormRequest
     {
         return [
             'titre.required' => trans('validation.champ-requis'),
-            'titre.max'=>'Le champs :attribute ne peut pas dépasser les 255 caractères',
+            'titre.max'=>'Le champs :attribute ne peut pas dépasser les 10 caractères',
             'contenu.required'  => trans('validation.champ-requis'),
         ];
     }

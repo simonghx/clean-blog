@@ -23,7 +23,9 @@
                     <div class="form-group">
                       <label for="">Contenu du post</label>
                       @if($errors->has('contenu'))
+                      {{-- @foreach($errors->get('contenu') as $error) --}}
                     <div class="text-danger">{{$errors->first('contenu')}}</div>
+                    {{-- @endforeach --}}
                     @endif
                     <textarea class="form-control {{$errors->has('contenu')?'border-danger':''}}" name="contenu" id="contenu" rows="3">{{old('contenu')}}</textarea>
                     </div>
@@ -34,5 +36,4 @@
             </div>
         </div>
     </div>
-
 @stop
