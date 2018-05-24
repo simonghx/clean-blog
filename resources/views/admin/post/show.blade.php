@@ -21,14 +21,14 @@
     <div class="col-md-4">
         <div class="box">
             <div class="box-header">
-                <h3>Action</h3>
+                <h3>Actions</h3>
             </div>
             <div class="box-body">
                 <a class="btn btn-warning text-white" href="{{route('posts.edit', ['post'=>$post->id])}}" role="button">Editer</a>
                 <form class="d-inline" action="{{route('posts.destroy', ['post'=>$post->id])}}" method="post">
                 @csrf
                 @method('DELETE')
-                    <button class="btn btn-danger" href="#" type="submit">Supprimer</button>
+                    <button class="btn btn-danger" type="submit">Supprimer</button>
                 </form>
                 
             </div>
