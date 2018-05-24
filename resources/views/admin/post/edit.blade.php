@@ -31,6 +31,7 @@
                     </div>
                   </div>
                   <button type="submit" class="btn btn-warning">Enregistrer</button>
+                  <a name="" id="" class="btn btn-danger" href="{{route('posts.show', ['post'=>$post->id])}}" role="button">Cancel</a>
                 </form>
             </div>
         </div>

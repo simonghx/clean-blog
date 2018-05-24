@@ -7,6 +7,7 @@
 @stop
 
 @section('content')
+<a name="" id="" class="btn btn-primary mb-4" href="{{route('posts.index')}}" role="button">Retour</a>
 <div class="row">
     <div class="col-md-8">
         <div class="box">

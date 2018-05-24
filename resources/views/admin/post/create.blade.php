@@ -16,13 +16,20 @@
                 @csrf
                   <div class="form-group">
                     <label for="">Titre</label>
-                  <input type="text" name="titre" id="titre" class="form-control" placeholder="Le titre du post" value="">
+                    @if($errors->has('titre'))
+                    <div class="text-danger">Veuillez entrer un titre.</div>
+                    @endif
+                  <input type="text" name="titre" id="titre" class="form-control {{$errors->has('titre')?'border-danger':''}}" placeholder="Le titre du post" value="{{old('titre')}}">
                     <div class="form-group">
                       <label for="">Contenu du post</label>
-                      <textarea class="form-control" name="contenu" id="contenu" rows="3"></textarea>
+                      @if($errors->has('contenu'))
+                    <div class="text-danger">Veuillez entrer un contenu.</div>
+                    @endif
+                    <textarea class="form-control {{$errors->has('contenu')?'border-danger':''}}" name="contenu" id="contenu" rows="3">{{old('contenu')}}</textarea>
                     </div>
                   </div>
                   <button type="submit" class="btn btn-warning">Créer</button>
+                    <a name="" id="" class="btn btn-danger" href="{{route('posts.index')}}" role="button">Cancel</a>
                 </form>
             </div>
         </div>
