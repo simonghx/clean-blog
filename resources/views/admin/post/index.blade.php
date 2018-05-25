@@ -14,20 +14,23 @@
     </div>
     <table class="table table-striped table-dark">
         <thead>
-            <tr>
-                <th>#</th>
-                <th>Titre post</th>
-                <th>Action</th>
+            <tr class="row mx-1">
+                <th class="col-md-2">#</th>
+                <th class="col-md-8">Titre post</th>
+                <th class="col-md-2">Action</th>
             </tr>
         </thead>
         <tbody>
+          
             @foreach($posts as $post)
-            <tr>
-                <td scope="row">{{$loop->iteration}}</td>
-                <td>{{$post->titre}}</td>
-                <td><a class="btn btn-light" href="{{route('posts.show', ['post'=>$post->id])}}" role="button">Voir</a></td>
+            <tr class="row mx-1">
+                <td class="col-md-2">{{$posts ->perPage()*($posts->currentPage()-1)+$loop->iteration}}</td>
+                <td class="col-md-8">{{$post->titre}}</td>
+                <td class="col-md-2"><a class="btn btn-light" href="{{route('posts.show', ['post'=>$post->id])}}" role="button">Voir</a></td>
             </tr>
+           
             @endforeach
         </tbody>
     </table>
+    {{ $posts->links() }}
 @stop
