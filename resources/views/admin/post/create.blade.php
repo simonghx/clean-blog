@@ -14,6 +14,8 @@
             <div class="box-body">
                 <form action="{{route('posts.store')}}" method="post">
                 @csrf
+
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                   <div class="form-group">
                     <label for="">Titre</label>
                     @if($errors->has('titre'))

@@ -41,6 +41,7 @@ class PostController extends Controller
         $post = new Post;
         $post->titre=$request->titre;
         $post->contenu= $request->contenu;
+        $post->user_id = $request->user_id;
         $post->save();
         return redirect()->route('posts.index');
     }

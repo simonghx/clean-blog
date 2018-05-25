@@ -17,8 +17,12 @@ class UsersTableSeeder extends Seeder
             "password" => bcrypt('admin1234'),
         ]);
 
-        factory(App\User::class, 50)->create();
+        factory(App\User::class, 50)->create()->each(function($user) {
+            for($i=0; $i < rand(1,3); $i++){
+                $user->posts()->save(factory(App\Post::class)->make());
 
+            }
+        });
 
     }
 }
