@@ -28,7 +28,11 @@
                 <td class="col-md-2">{{$posts ->perPage()*($posts->currentPage()-1)+$loop->iteration}}</td>
                 <td class="col-md-4">{{$post->titre}}</td>
                 <td class="col-md-4">{{$post->user->name}}</td>
-                <td class="col-md-2"><a class="btn btn-light" href="{{route('posts.show', ['post'=>$post->id])}}" role="button">Voir</a></td>
+                <td class="col-md-2">
+                    @can('view', $post)
+                    <a class="btn btn-light" href="{{route('posts.show', ['post'=>$post->id])}}" role="button">Voir</a>
+                    @endcan
+                </td>
             </tr>
            
             @endforeach

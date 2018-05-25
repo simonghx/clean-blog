@@ -17,6 +17,9 @@
             <div class="box-body">
                 <p>{{$post->contenu}}</p>
             </div>
+            <div class="box-footer">
+                <h4>Auteur du post : {{$post->user->name}}</h4>
+            </div>
         </div>
     </div>
     <div class="col-md-4">
@@ -25,11 +28,15 @@
                 <h3>Actions</h3>
             </div>
             <div class="box-body">
+                @can('update', $post)
                 <a class="btn btn-warning text-white" href="{{route('posts.edit', ['post'=>$post->id])}}" role="button">Editer</a>
+                @endcan
                 <form class="d-inline" action="{{route('posts.destroy', ['post'=>$post->id])}}" method="post">
                 @csrf
                 @method('DELETE')
+                     @can('delete', $post)
                     <button class="btn btn-danger" type="submit">Supprimer</button>
+                    @endcan
                 </form>
                 
             </div>

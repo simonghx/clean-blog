@@ -54,6 +54,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+         $this->authorize('view', $post);
         return view('admin.post.show', compact('post'));
     }
 
@@ -65,6 +66,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        $this->authorize('update', $post);
         return view('admin.post.edit', compact('post'));
     }
 
@@ -77,6 +79,7 @@ class PostController extends Controller
      */
     public function update(StorePost $request, Post $post)
     {
+        $this->authorize('update', $post);
         $request->validated();
         $post->titre = $request->titre;
         $post->contenu = $request->contenu;
@@ -92,6 +95,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
         $post->delete();
         return redirect()->route('posts.index', ['post'=>$post->id]);
     }
