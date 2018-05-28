@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +47,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+         if($exception instanceof AuthorizationException) {
+            return redirect()->back()->with([
+                "message" => "Vous n'avez pas les autorisations pour accéder à cette page.",
+                "status" => "danger",
+            ]);
+         }
         return parent::render($request, $exception);
     }
 }

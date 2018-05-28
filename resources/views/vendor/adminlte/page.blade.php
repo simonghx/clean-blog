@@ -107,6 +107,11 @@
             <div class="container">
             @endif
 
+            <div></div>
+            @if(session('message'))
+               @include('components.notif')
+            @endif 
+
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 @yield('content_header')

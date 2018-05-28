@@ -28,7 +28,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view(view, 'admin.post.create');
+        return view('admin.post.create');
     }
 
     /**
@@ -44,8 +44,11 @@ class PostController extends Controller
         $post->titre=$request->titre;
         $post->contenu= $request->contenu;
         $post->user_id = Auth::user()->id;
-        $post->save();
-        return redirect()->route('posts.index');
+        if($post->save()) {
+            return redirect()->route('posts.index')->with(["status"=>"success", "message" => trans('validation.post-create')]);
+        } else {
+            return redirect()->route('posts.index')->with(["status"=>"danger", "message" => trans('validation.post-error')]);
+        }
     }
 
     /**
@@ -85,8 +88,11 @@ class PostController extends Controller
         $request->validated();
         $post->titre = $request->titre;
         $post->contenu = $request->contenu;
-        $post->save();
-        return redirect()->route('posts.show', ['post'=>$post->id]);
+        if($post->save()) {
+            return redirect()->route('posts.show', ['post'=>$post->id])->with(["status"=>"success", "message" => trans('validation.post-edit')]);
+        } else {
+            return redirect()->route('posts.show', ['post'=>$post->id])->with(["status"=>"danger", "message" => trans('validation.post-error')]);
+        }
     }
 
     /**
@@ -98,7 +104,10 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
-        $post->delete();
-        return redirect()->route('posts.index', ['post'=>$post->id]);
+        if($post->delete()) {
+            return redirect()->route('posts.index', ['post'=>$post->id])->with(["status"=>"success", "message" => trans('validation.post-delete')]);
+        } else {
+            return redirect()->route('posts.index', ['post'=>$post->id])->with(["status"=>"danger", "message" => trans('validation.post-error')]);
+        }
     }
 }
