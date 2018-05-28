@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePost;
+use Auth;
 
 class PostController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +28,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.post.create');
+        return view(view, 'admin.post.create');
     }
 
     /**
@@ -41,7 +43,7 @@ class PostController extends Controller
         $post = new Post;
         $post->titre=$request->titre;
         $post->contenu= $request->contenu;
-        $post->user_id = $request->user_id;
+        $post->user_id = Auth::user()->id;
         $post->save();
         return redirect()->route('posts.index');
     }
@@ -54,7 +56,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-         $this->authorize('view', $post);
+        $this->authorize('view', $post);
         return view('admin.post.show', compact('post'));
     }
 
