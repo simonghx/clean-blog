@@ -25,7 +25,8 @@
           
             @foreach($posts as $post)
             <tr class="row mx-1">
-                <td class="col-md-2">{{$posts ->perPage()*($posts->currentPage()-1)+$loop->iteration}}</td>
+                {{-- <td class="col-md-2">{{$posts ->perPage()*($posts->currentPage()-1)+$loop->iteration}}</td> --}}
+                <td class="col-md-2">{{$loop->iteration}}</td>
                 <td class="col-md-4">{{$post->titre}}</td>
                 <td class="col-md-4">{{$post->user->name}}</td>
                 <td class="col-md-2">
@@ -38,5 +39,5 @@
             @endforeach
         </tbody>
     </table>
-    {{ $posts->links() }}
+    {{-- {{ $posts->links() }} --}}
 @stop

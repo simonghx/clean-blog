@@ -29,7 +29,7 @@
             </div>
             <div class="box-body">
                 @can('update', $post)
-                <a class="btn btn-warning text-white" href="{{route('posts.edit', ['post'=>$post->id])}}" role="button">Editer</a>
+                <a class="btn btn-warning text-white" href="{{route('posts.edit', ['post'=>$post->id])}}" role="button">@lang('general.edit')</a>
                 @endcan
                 <form class="d-inline" action="{{route('posts.destroy', ['post'=>$post->id])}}" method="post">
                 @csrf

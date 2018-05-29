@@ -10,6 +10,7 @@ use Auth;
 class PostController extends Controller
 {
 
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +18,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(5);
+        $posts = Post::with('user')->get()->sortByDesc('created_at');
+        // $posts = Post::paginate(5);
         return view('admin.post.index', compact('posts'));
     }
 
