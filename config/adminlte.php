@@ -126,6 +126,12 @@ return [
             'url'         => 'admin/posts',
             'icon'        => 'file',
         ],
+        [
+            'text'        => 'Users',
+            'url'         => 'admin/users',
+            'icon'        => 'users',
+            'can'         => 'admin',
+        ],
         'ACCOUNT SETTINGS',
         [
             'text' => 'Profile',
