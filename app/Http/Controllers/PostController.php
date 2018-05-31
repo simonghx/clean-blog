@@ -6,6 +6,8 @@ use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePost;
 use Auth;
+use Illuminate\Support\Facades\Storage;
+
 
 class PostController extends Controller
 {
@@ -45,6 +47,7 @@ class PostController extends Controller
         $post = new Post;
         $post->titre=$request->titre;
         $post->contenu= $request->contenu;
+        $post->image = $request->image->store('', 'images');
         $post->user_id = Auth::user()->id;
         if($post->save()) {
             return redirect()->route('posts.index')->with(["status"=>"success", "message" => trans('validation.post-create')]);

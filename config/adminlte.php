@@ -132,6 +132,11 @@ return [
             'icon'        => 'users',
             'can'         => 'admin',
         ],
+        [
+            'text'        => 'Files',
+            'url'         => 'admin/files',
+            'icon'        => 'file',
+        ],
         'ACCOUNT SETTINGS',
         [
             'text' => 'Profile',

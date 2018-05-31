@@ -15,6 +15,9 @@
                 <h1>{{$post->titre}}</h1>
             </div>
             <div class="box-body">
+                <img src="{{Storage::disk('images')->url($post->image)}}" alt="">
+                <p>{{Storage::disk('images')->size($post->image)}}</p>
+                <hr>
                 <p>{{$post->contenu}}</p>
             </div>
             <div class="box-footer">

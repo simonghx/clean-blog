@@ -19,4 +19,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/admin/posts', 'PostController')->middleware('auth');
 Route::resource('/admin/users', 'UserController')->middleware('can:admin');
+Route::resource('/admin/files', 'FileController')->middleware('auth');
 
