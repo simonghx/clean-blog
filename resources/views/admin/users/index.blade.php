@@ -31,7 +31,7 @@
                 <td >{{$loop->iteration}}</td>
                 <td >{{$user->name}}</td>
                 <td >{{$user->email}}</td>
-                <td >{{$user->role->slug}}</td>
+                <td >{{$user->role->name}}</td>
                 <td >{{count($user->posts)}}</td>
                 <td >
                     <a class="btn btn-light" href="{{route('users.show', ['user' => $user->id])}}" role="button">Voir</a>

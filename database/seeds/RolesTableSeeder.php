@@ -20,5 +20,9 @@ class RolesTableSeeder extends Seeder
                 "name" => 'Editeur',
                 "slug" => "editor"
             ]);
+        Role::create([
+                "name" => 'Guest',
+                "slug" => "guest"
+            ]);
     }
 }

@@ -44,19 +44,22 @@
                    
                     </div>
 
+                    @foreach($roles as $role)
                     <div class="form-check">
+                      
                       <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="role_id" id="" value="1" checked>
-                        Admin
+                      <input type="radio" class="form-check-input" name="role_id" id="" value="{{$role->id}}" {{old('role_id', ($user->role_id == $role->id) ? 'checked':'')}}>
+                        {{$role->name}}
                       </label>
                       
                     </div>
-                    <div class="form-check">
+                    @endforeach
+                    {{-- <div class="form-check">
                       <label class="form-check-label">
                         <input type="radio" class="form-check-input" name="role_id" id="" value="2" >
                         Editeur
                       </label>
-                    </div>
+                    </div> --}}
                     
                   </div>
                   <button type="submit" class="btn btn-warning">Ajouter</button>

@@ -19,7 +19,7 @@
                 
             </div>
             <div class="box-footer">
-              <h4>{{$user->role->slug}}</h4>
+              <h4>{{$user->role->name}}</h4>
             </div>
             
         </div>

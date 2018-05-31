@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Post;
+use App\Role;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUser;
 
@@ -16,8 +16,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        $posts = Post::all()->sortByDesc('created_at');
+        $users = User::with('posts', 'role')->get()->filter(function($user) {
+          return $user->role->slug != "admin";  
+        });
+        
         return view('admin/users/index', compact('users'));
     }
 
@@ -26,9 +28,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Role $roles)
     {
-        return view('admin/users/create');
+        $roles = Role::all();
+        return view('admin/users/create', compact('roles'));
     }
 
     /**
@@ -58,8 +61,9 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user, Post $posts)
+    public function show(User $user)
     {
+        $posts = $user->posts;
         return view('admin/users/show', compact('user', 'posts'));
     }
 
@@ -69,9 +73,10 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(User $user, Role $roles)
     {
-        return view('admin/users/edit', compact('user'));
+        $roles = Role::all();
+        return view('admin/users/edit', compact('user', 'roles'));
     }
 
     /**
@@ -92,7 +97,9 @@ class UserController extends Controller
 
         $user->name=$request->name;
         $user->email= $request->email;
-        $user->password = bcrypt($request->password);
+        if($request->password != "") {
+            $user->password = bcrypt($request->password);
+        } 
         $user->role_id = $request->role_id;
         if($user->save()) {
             return redirect()->route('users.index')->with(["status"=>"success", "message" => "Votre utilisateur a bien été modifié"]);
@@ -110,6 +117,9 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         
+        foreach($user->posts as $post) {
+            $post->delete();
+        }
         if($user->delete()) {
             return redirect()->route('users.index')->with(["status"=>"success", "message" => "Votre utilisateur a bien été supprimé"]);
         } else {

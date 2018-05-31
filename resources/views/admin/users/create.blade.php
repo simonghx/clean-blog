@@ -30,19 +30,17 @@
                     @endif
                     <input class="form-control {{$errors->has('email')?'border-danger':''}}" type="text" name="email" id="" placeholder="L'email de l'utilisateur" value="{{old('email')}}">
                     </div>
+                    @foreach($roles as $role)
                     <div class="form-check">
+                      
                       <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="role_id" id="" value="1" checked>
-                        Admin
+                      <input type="radio" class="form-check-input" name="role_id" id="" value="{{$role->id}}">
+                        {{$role->name}}
                       </label>
                       
                     </div>
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="role_id" id="" value="2" >
-                        Editeur
-                      </label>
-                    </div>
+                    @endforeach
+                    
                   </div>
                   <button type="submit" class="btn btn-warning">Ajouter</button>
                     <a name="" id="" class="btn btn-danger" href="{{route('users.index')}}" role="button">Cancel</a>
