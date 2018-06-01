@@ -47,7 +47,9 @@ class PostController extends Controller
         $post = new Post;
         $post->titre=$request->titre;
         $post->contenu= $request->contenu;
-        $post->image = $request->image->store('', 'images');
+        if ($request->image != null) {
+            $post->image = $request->image->store('', 'images');
+        }
         $post->user_id = Auth::user()->id;
         if($post->save()) {
             return redirect()->route('posts.index')->with(["status"=>"success", "message" => trans('validation.post-create')]);
@@ -93,6 +95,12 @@ class PostController extends Controller
         $request->validated();
         $post->titre = $request->titre;
         $post->contenu = $request->contenu;
+        if ($request->image != null) {
+            if(Storage::disk('images')->exists($post->image)){
+                Storage::disk('images')->delete($post->image);
+            }
+            $post->image = $request->image->store('', 'images');
+        }
         if($post->save()) {
             return redirect()->route('posts.show', ['post'=>$post->id])->with(["status"=>"success", "message" => trans('validation.post-edit')]);
         } else {
@@ -109,7 +117,11 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
+        
         if($post->delete()) {
+            if($post->image != null) {
+            Storage::disk('images')->delete($post->image);
+            }
             return redirect()->route('posts.index', ['post'=>$post->id])->with(["status"=>"success", "message" => trans('validation.post-delete')]);
         } else {
             return redirect()->route('posts.index', ['post'=>$post->id])->with(["status"=>"danger", "message" => trans('validation.post-error')]);

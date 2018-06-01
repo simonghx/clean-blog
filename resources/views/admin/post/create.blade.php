@@ -17,7 +17,7 @@
 
                 <input type="hidden" name="user_id" value="{{ Auth::user()->id }}"> 
                   <div class="form-group">
-                    <label for="">Titre</label>
+                    <label for="titre">Titre</label>
                     @if($errors->has('titre'))
                     <div class="text-danger">{{$errors->first('titre')}}</div>
                     @endif
@@ -32,9 +32,19 @@
                 @endif
                 <textarea class="form-control {{$errors->has('contenu')?'border-danger':''}}" name="contenu" id="contenu" rows="3">{{old('contenu')}}</textarea>
                 </div>
+                
                 <div class="form-group">
-                    <label for="">Image</label>
-                    <input type="file" class="form-control-file" name="image" id="" placeholder="">
+                    <img src="" alt="">
+                    @if($errors->has('image'))
+                        @foreach($errors->get('image') as $error)
+                        <div class="text-danger">{{$error}}</div>
+                        @endforeach
+                    @endif
+                    <div class="custom-file"  data-bsfileupload>
+                        <label class="custom-file-label" for="customFile">Uploader une image</label>
+                        <input name="image" type="file" class="custom-file-input" id="customFile">
+                    </div>
+                    
                 </div>
                   <button type="submit" class="btn btn-warning">Créer</button>
                     <a name="" id="" class="btn btn-danger" href="{{route('posts.index')}}" role="button">Cancel</a>
@@ -43,3 +53,7 @@
         </div>
     </div>
 @stop
+
+@push('js')
+<script src="{{asset('js/lib/bstrp-change-file-input-value.js')}}"></script>
+@endpush

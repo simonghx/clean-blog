@@ -26,6 +26,7 @@ class StorePost extends FormRequest
         return [
             'titre' => 'required|max:255',
             'contenu' => 'required',
+            'image' => 'image|max:200000'
         ];
     }
 
@@ -41,6 +42,8 @@ class StorePost extends FormRequest
             'titre.required' => trans('validation.champ-requis'),
             'titre.max'=>'Le champs :attribute ne peut pas dépasser les 10 caractères',
             'contenu.required'  => trans('validation.champ-requis'),
+            'image.image'  => ':attribute doit être un fichier image (jpeg, png, bmp, gif, ou svg)',
+            'image.max'  => ':attribute doit être un fichier de max :max octets.',
         ];
     }
 
