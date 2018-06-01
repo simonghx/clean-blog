@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StorePost;
 use Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Input;
+use File; 
+use Image;
 
 
 class PostController extends Controller
@@ -47,9 +50,21 @@ class PostController extends Controller
         $post = new Post;
         $post->titre=$request->titre;
         $post->contenu= $request->contenu;
-        if ($request->image != null) {
-            $post->image = $request->image->store('', 'images');
+        if ($request->image != null) {    
+            $post->image = $request->image->store('','images');
+            // create instance
+            $thumbnail = Image::make(Storage::disk('images')->path($post->image))->resize(200, null, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });           
+
+            $path = Storage::disk('thumbnails')->getAdapter()->getPathPrefix();
+
+            $thumbnail->save($path.$post->image);
+
+            
         }
+
         $post->user_id = Auth::user()->id;
         if($post->save()) {
             return redirect()->route('posts.index')->with(["status"=>"success", "message" => trans('validation.post-create')]);
