@@ -15,13 +15,24 @@
                 <h1>{{$post->titre}}</h1>
             </div>
             <div class="box-body">
-                <div class="col-md-3">
                 @if($post->image != null)
-                <img class="img-fluid" src="{{Storage::disk('images')->url($post->image)}}" alt="">
-                <p>{{Storage::disk('images')->size($post->image)}}</p>
-                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Original :</h4>
+                        <img class="img-fluid" src="{{Storage::disk('images')->url($post->image)}}" alt="">
+                        <p>{{Storage::disk('images')->size($post->image)}}</p>
+                    </div>
+                    <div class="col-md-6">
+                        
+                        <h4>Thumbnail :</h4>
+                        <img class="" src="{{Storage::disk('thumbnails')->url($post->image)}}" alt="">
+                        <p>{{Storage::disk('thumbnails')->size($post->image)}}</p>
+                    </div>
                 </div>
+                <hr>               
+                
                 @endif
+                <h3>Contenu du post :</h3>
                 <p>{{$post->contenu}}</p>
             </div>
             <div class="box-footer">
