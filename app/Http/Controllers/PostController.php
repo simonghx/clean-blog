@@ -52,15 +52,16 @@ class PostController extends Controller
         $post->contenu= $request->contenu;
         if ($request->image != null) {    
             $post->image = $request->image->store('','images');
+            $request->image->store('','thumbnails');
             // create instance
-            $thumbnail = Image::make(Storage::disk('images')->path($post->image))->resize(200, null, function ($constraint) {
+            $thumbnail = Image::make(Storage::disk('thumbnails')->path($post->image))->resize(200, null, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });           
 
-            $path = Storage::disk('thumbnails')->getAdapter()->getPathPrefix();
+            //$path = Storage::disk('thumbnails')->getAdapter()->getPathPrefix();
 
-            $thumbnail->save($path.$post->image);
+            $thumbnail->save();
 
             
         }
@@ -110,11 +111,21 @@ class PostController extends Controller
         $request->validated();
         $post->titre = $request->titre;
         $post->contenu = $request->contenu;
-        if ($request->image != null) {
-            if(Storage::disk('images')->exists($post->image)){
-                Storage::disk('images')->delete($post->image);
-            }
-            $post->image = $request->image->store('', 'images');
+         if ($request->image != null) {    
+             storage::disk('images')->delete($post->image);
+             storage::disk('thumbnails')->delete($post->image);
+
+            $post->image = $request->image->store('','images');
+            $request->image->store('','thumbnails');
+            // create instance
+            $thumbnail = Image::make(Storage::disk('thumbnails')->path($post->image))->resize(200, null, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });           
+
+            //$path = Storage::disk('thumbnails')->getAdapter()->getPathPrefix();
+
+            $thumbnail->save();   
         }
         if($post->save()) {
             return redirect()->route('posts.show', ['post'=>$post->id])->with(["status"=>"success", "message" => trans('validation.post-edit')]);
@@ -136,6 +147,7 @@ class PostController extends Controller
         if($post->delete()) {
             if($post->image != null) {
             Storage::disk('images')->delete($post->image);
+            Storage::disk('thumbnails')->delete($post->image);
             }
             return redirect()->route('posts.index', ['post'=>$post->id])->with(["status"=>"success", "message" => trans('validation.post-delete')]);
         } else {

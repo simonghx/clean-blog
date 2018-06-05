@@ -448,4 +448,3 @@ Un service dans Laravel, c'est un outil qui va servir à quelque chose de bien s
     
 Quand on utilisera le resize, on créera un second disque que l'on appelle "thumbnails" par exemple dans lequel on stockera les images avec leurs nouvelles dimensions et le premier disque servira à conserver l'image originale.
 
- 
