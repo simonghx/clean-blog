@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 use File; 
 use Image;
+use App;
 
 
 class PostController extends Controller
@@ -51,17 +52,9 @@ class PostController extends Controller
         $post->titre=$request->titre;
         $post->contenu= $request->contenu;
         if ($request->image != null) {    
-            $post->image = $request->image->store('','images');
-            $request->image->store('','thumbnails');
-            // create instance
-            $thumbnail = Image::make(Storage::disk('thumbnails')->path($post->image))->resize(200, null, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });           
+            
+            $post->image = App::make('App\Services\ImageResizing')->imageStore($request->image);
 
-            //$path = Storage::disk('thumbnails')->getAdapter()->getPathPrefix();
-
-            $thumbnail->save();
 
             
         }
@@ -111,21 +104,11 @@ class PostController extends Controller
         $request->validated();
         $post->titre = $request->titre;
         $post->contenu = $request->contenu;
-         if ($request->image != null) {    
-             storage::disk('images')->delete($post->image);
-             storage::disk('thumbnails')->delete($post->image);
+         if ($request->image != null) {   
 
-            $post->image = $request->image->store('','images');
-            $request->image->store('','thumbnails');
-            // create instance
-            $thumbnail = Image::make(Storage::disk('thumbnails')->path($post->image))->resize(200, null, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });           
+            App::make('App\Services\ImageResizing')->imageDelete($post->image);
+            $post->image = App::make('App\Services\ImageResizing')->imageStore($request->image);
 
-            //$path = Storage::disk('thumbnails')->getAdapter()->getPathPrefix();
-
-            $thumbnail->save();   
         }
         if($post->save()) {
             return redirect()->route('posts.show', ['post'=>$post->id])->with(["status"=>"success", "message" => trans('validation.post-edit')]);
@@ -146,8 +129,7 @@ class PostController extends Controller
         
         if($post->delete()) {
             if($post->image != null) {
-            Storage::disk('images')->delete($post->image);
-            Storage::disk('thumbnails')->delete($post->image);
+                App::make('App\Services\ImageResizing')->imageDelete($post->image);
             }
             return redirect()->route('posts.index', ['post'=>$post->id])->with(["status"=>"success", "message" => trans('validation.post-delete')]);
         } else {
