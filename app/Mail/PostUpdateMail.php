@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Storage;
 
 class PostUpdateMail extends Mailable
 {
@@ -30,6 +31,9 @@ class PostUpdateMail extends Mailable
     public function build()
     {
        return $this->from('example@example.com')
-                   ->view('admin.mails.post-update');
+                   ->view('admin.mails.post-update')
+                   ->attach(
+                       Storage::disk('thumbnails')->path($this->post->image)
+                   );
     }
 }

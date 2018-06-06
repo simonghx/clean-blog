@@ -13,5 +13,6 @@
   <p>
     {{$post->contenu}}
   </p>
+  
 </body>
 </html>
