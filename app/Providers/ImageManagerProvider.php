@@ -24,8 +24,10 @@ class ImageManagerProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Services\ImageResizing', function ($app) {
+        $this->app->singleton('ImageResizing', function ($app) {
           return new ImageResizing();
         });
+
+       
     }
 }

@@ -443,8 +443,19 @@ Ensuite mettre un "use Storage" tout au-dessus dans le PostController.
 ##### Pour changer les dimensions d'une photo en la postant
 Pour changer les dimensions, la couleurs, ajouter du texte sur une photo que l'on enregistre pour le site, on utilise Intervention. 
 Pour installer `composer require intervention\image` -> disponible dans la doc. Depuis Laravel 5.5, on ne doit plus intégrer Intervention dans les providers de notre projet (fichier app.php dans les configs).
-
-Un service dans Laravel, c'est un outil qui va servir à quelque chose de bien spécifique.
-    
+  
 Quand on utilisera le resize, on créera un second disque que l'on appelle "thumbnails" par exemple dans lequel on stockera les images avec leurs nouvelles dimensions et le premier disque servira à conserver l'image originale.
 
+##### Services 
+Un service dans Laravel, c'est un outil qui va servir à quelque chose de bien spécifique.
+
+Le service permet de stocker un code que l'on va qualifier de service, il permet de faire quelque chose sur le site de spécifique et de pouvoir l'utiliser à plusieurs endroits sans pour autant dupliquer le code. 
+
+Pour faire appel à un service, on va utiliser un provider (on peut le comparer aux ressources humaines).
+On enregistre le service dans le provider qui va lui le mettre en place dans l'application par le biais d'un container (espace où l'on va binder l'ensemble des services dont on a besoin.
+Pour créer le provider  `pa make:provider NomDuProvider `
+
+Le service quant à lui doit être créer manuellement dans un dossier services dans App.
+Le service lui ne contiendra que la classe possèdant les lignes de code dont on a besoin pour réaliser le service (ex: un resizing des images).
+
+Pour pouvoir utiliser notre provider, il faut l'enregistrer dans le tableau providers du fichier app.php du dossier config.

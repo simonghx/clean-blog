@@ -11,10 +11,14 @@ use Illuminate\Support\Facades\Input;
 use File; 
 use Image;
 use App;
-
+use App\Services\ImageResizing;
 
 class PostController extends Controller
 {
+
+    public function __construct(ImageResizing  $imageResizing){
+        $this->imageResizing = $imageResizing;
+    }
 
 
     /**
@@ -53,7 +57,7 @@ class PostController extends Controller
         $post->contenu= $request->contenu;
         if ($request->image != null) {    
             
-            $post->image = App::make('App\Services\ImageResizing')->imageStore($request->image);
+            $post->image = $this->imageResizing->imageStore($request->image);
 
 
             
@@ -106,8 +110,8 @@ class PostController extends Controller
         $post->contenu = $request->contenu;
          if ($request->image != null) {   
 
-            App::make('App\Services\ImageResizing')->imageDelete($post->image);
-            $post->image = App::make('App\Services\ImageResizing')->imageStore($request->image);
+            $this->imageResizing->imageDelete($post->image);
+            $post->image = $this->imageResizing->imageStore($request->image);
 
         }
         if($post->save()) {
@@ -129,7 +133,7 @@ class PostController extends Controller
         
         if($post->delete()) {
             if($post->image != null) {
-                App::make('App\Services\ImageResizing')->imageDelete($post->image);
+                $this->imageResizing->imageDelete($post->image);
             }
             return redirect()->route('posts.index', ['post'=>$post->id])->with(["status"=>"success", "message" => trans('validation.post-delete')]);
         } else {

@@ -165,7 +165,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         
-        // Custom providers
+        /** 
+         * Custom providers
+         */
         App\Providers\ImageManagerProvider::class,
 
     ],
