@@ -6,12 +6,10 @@ use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePost;
 use Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Input;
-use File; 
-use Image;
 use App;
 use App\Services\ImageResizing;
+use Mail;
+use App\Mail\PostUpdateMail; 
 
 class PostController extends Controller
 {
@@ -115,6 +113,7 @@ class PostController extends Controller
 
         }
         if($post->save()) {
+            Mail::to($post->user)->send(new PostUpdateMail($post));
             return redirect()->route('posts.show', ['post'=>$post->id])->with(["status"=>"success", "message" => trans('validation.post-edit')]);
         } else {
             return redirect()->route('posts.show', ['post'=>$post->id])->with(["status"=>"danger", "message" => trans('validation.post-error')]);

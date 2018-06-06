@@ -459,3 +459,8 @@ Le service quant à lui doit être créer manuellement dans un dossier services 
 Le service lui ne contiendra que la classe possèdant les lignes de code dont on a besoin pour réaliser le service (ex: un resizing des images).
 
 Pour pouvoir utiliser notre provider, il faut l'enregistrer dans le tableau providers du fichier app.php du dossier config.
+
+
+###### Mails
+
+On ajoute un nouveau fichier mail vie la commande de php artisan
