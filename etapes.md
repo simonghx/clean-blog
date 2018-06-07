@@ -75,6 +75,8 @@ S'enregister dans l'AdminLTE et l'ouvrir
 
 Taper --> php artisan make:model Post -a
 
+Si on veut que notre model Post soit associé à une table Article et ne remplit donc pas les conventions de nommage, je dois ajouter un "protected $table = 'nom de la table';"
+
 Cela va créer un fichier "factory", un ficher de "migration" et un fichier "controller" et un fichier "provider"
 
 
@@ -384,7 +386,8 @@ return  redirect()->route('post.index');
 
 ## Les autorize et middleware
 
-
+Les alias des middleware se trouvent dans le Kernel.php
+On doit les enregistrer dans le kernel pour pouvoir les utiliser. 
 
 
 ##  Upload des fichiers/images dans nos posts
